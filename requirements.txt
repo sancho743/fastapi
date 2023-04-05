@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-dotenv
+pydantic[email]
+argon2-cffi
+passlib[bcrypt]
+python-jose
+pycryptodome
+jinja2
+python-multipart
+wheel

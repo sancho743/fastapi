@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+    <head>
+        {% block title %}
+        {% endblock %}
+
+        <link rel="stylesheet" href="/static/styles/footer.css">
+        <link rel="stylesheet" href="/static/styles/scrolling.css">
+        <link rel="stylesheet" href="/static/styles/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/styles/dataTables.bootstrap5.min.css">
+        <link rel="icon" href="/static/images/favicon.ico">
+
+        {% block styles %}
+        {% endblock %}
+    </head>
+    <body>
+        {% include "components/navbar.html" %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% include "components/footer.html" %}
+
+        <script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="/static/js/jquery-3.5.1.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="/static/js/dataTables.bootstrap5.min.js"></script>
+
+        {% block scripts %}
+        {% endblock %}
+    </body>

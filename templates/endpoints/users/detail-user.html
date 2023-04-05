@@ -1,0 +1,93 @@
+{% extends "shared/base.html" %}
+
+{% block title %}
+  <title>{{ user.username }}</title>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+
+    <h1 style="margin-top: 20px; margin-bottom: 20px">Информация о пользователе '{{ user.username }}'</h1>
+
+    <form>
+
+      <div class="mb-3">
+        <label for="username" class="form-label" style="margin-top: 20px">Имя пользователя</label>
+        <input type="text" required class="form-control" name="username" id="username" value="{{ user.username }}" placeholder="имя пользователя" disabled>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px; margin-bottom: 15px">
+        {% if user.is_superuser %}
+          <input class="form-check-input" type="checkbox" id="superuser_checked" name="superuser" checked disabled>
+            {% else %}
+              <input class="form-check-input" type="checkbox" id="superuser" name="superuser" disabled>
+        {% endif %}
+        <label class="form-check-label" for="superuser" style="margin-left: 5px">Администратор</label>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px; margin-bottom: 15px">
+        {% if user.is_blocked %}
+          <input class="form-check-input" type="checkbox" id="blocked" name="blocked" checked disabled>
+            {% else %}
+              <input class="form-check-input" type="checkbox" id="blocked" name="blocked" disabled>
+        {% endif %}
+        <label class="form-check-label" for="blocked" style="margin-left: 5px">Блокировка пользователя</label>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px; margin-bottom: 15px">
+        {% if user.need_to_change_password %}
+          <input class="form-check-input" type="checkbox" id="need_to_change_password" name="need_to_change_password" checked disabled>
+            {% else %}
+              <input class="form-check-input" type="checkbox" id="need_to_change_password" name="need_to_change_password" disabled>
+        {% endif %}
+        <label class="form-check-label" for="need_to_change_password" style="margin-left: 5px">Требовать изменение личного пароля</label>
+      </div>
+
+      <div class="mb-3">
+        <label for="passwords">Группы</label>
+        <div class="form-control" style="margin-top: 10px">
+          {% if user.groups %}
+            <div class="custom_scrolling">
+              {% for group in user.groups %}
+                  <div class="form-check form-switch" style="margin-left: 5px">
+                    <label class="form-check-label" for="groups">{{ group.group_name }}</label>
+                    <input class="form-check-input" type="checkbox" value="{{ group.id }}" name="groups" id="groups" checked disabled>
+                  </div>
+              {% endfor %}
+            </div>
+            {% else %}
+              <p>Группы не найдены.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="passwords">Выделенные пароли</label>
+        <div class="form-control" style="margin-top: 10px">
+          {% if user.available_passwords %}
+            <div class="custom_scrolling">
+              {% for password in user.available_passwords %}
+                  <div class="form-check form-switch" style="margin-left: 5px">
+                    <label class="form-check-label" for="passwords">{{ password.service_name }}</label>
+                    <input class="form-check-input" type="checkbox" value="{{ password.id }}" name="passwords" id="passwords" checked disabled>
+                  </div>
+              {% endfor %}
+            </div>
+            {% else %}
+              <p>Пароли не найдены.</p>
+          {% endif %}
+        </div>
+      </div>
+
+    </form>
+
+    <form action="/users/edit/{{ user.id }}">
+      <div class="d-grid gap-2" style="margin-top: 30px; margin-bottom: 30px">
+        <button type="submit" class="btn btn-outline-primary">Изменить информацию</button>
+      </div>
+    </form>
+
+  </div>
+
+{% endblock %}

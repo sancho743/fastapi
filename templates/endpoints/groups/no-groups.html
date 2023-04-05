@@ -1,0 +1,18 @@
+{% extends "shared/base.html" %}
+
+{% block title %}
+  <title>Ошибка</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 style="margin-top: 20px; margin-bottom: 20px">Ошибка</h1>
+    <div class="alert alert-danger" role="alert">Группы не найдены.</div>
+
+    <form action="/groups/create">
+      <div class="d-grid gap-2">
+          <button class="btn btn-outline-primary" type="submit">Создать группу</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="/static/styles/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/styles/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="/static/styles/footer.css">
+        <link rel="icon" href="/static/images/favicon.ico">
+
+        {% block title %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block content %}
+        {% endblock %}
+        {% include "components/footer.html" %}
+        <script type="text/javascript" src="/static/js/bootstrap.bundle.min.js"></script>
+        {% block scripts %}
+        {% endblock %}
+    </body>

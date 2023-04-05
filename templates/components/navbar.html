@@ -1,0 +1,89 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/static/images/safe.svg" alt="Logo" width="40" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/">На главную</a>
+          </li>
+          {% if current_user %}
+            {% if current_user.is_superuser %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Пользователи
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/users">Все пользователи</a></li>
+                  <li><a class="dropdown-item" href="/users/blocked">Заблокированные пользователи</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/users/create">Создать пользователя</a></li>
+                </ul>
+              </li>
+            {% endif %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Пароли
+              </a>
+              <ul class="dropdown-menu">
+                {% if current_user.is_superuser %}
+                <li><a class="dropdown-item" href="/passwords">Все пароли</a></li>
+                <li><a class="dropdown-item" href="/passwords/by-groups">Пароли по группам</a></li>
+                <li><a class="dropdown-item" href="/passwords/need-to-change">Неактуальные пароли</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/passwords/reencryption">Перешифрование паролей</a></li>
+                <li><hr class="dropdown-divider"></li>
+                  {% else %}
+                    <li><a class="dropdown-item" href="/passwords">Доступные мне пароли</a></li>
+                {% endif %}
+                <li><a class="dropdown-item" href="/passwords/personal">Мои пароли</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/passwords/change-personal-password">Изменить мой пароль</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/passwords/create">Создание пароля</a></li>
+              </ul>
+            </li>
+            {% if current_user.is_superuser %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Группы
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/groups">Все группы</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/groups/create">Создать группу</a></li>
+              </ul>
+            </li>
+            {% endif %}
+          {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="/passwords/generate">Сгенерировать пароль</a>
+            </li>
+          </ul>
+      </div>
+      {% if current_user %}
+            <a class="nav-item nav-link active" href="/passwords" style="margin-right: 50px">Пользователь: {{ current_user.username }}</a>
+            {% if current_user.need_to_change_password %}
+              <form action="/passwords/change-personal-password">
+                <button class="btn btn-outline-danger" type="submit" style="margin-left: 30px; margin-right: 30px">Внимание!</button>
+              </form>
+            {% endif %}
+            {% if current_user %}
+              <form action="/logout/">
+                <button class="btn btn-outline-primary" type="submit" style="margin-right: 10px">Выйти</button>
+              </form>
+            {% endif %}
+      {% endif %}
+      {% if not current_user %}
+        <form action="/login/">
+          <button class="btn btn-outline-primary" type="submit">Войти</button>
+        </form>
+      {% endif %}
+    </div>
+  </nav>
+</div>

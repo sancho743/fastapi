@@ -1,0 +1,93 @@
+{% extends "shared/base.html" %}
+
+{% block title %}
+    <title>Заблокированные пользователи</title>
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row">
+            <div id="result" class="text-danger text-bold lead"></div>
+        </div>
+
+        <div class="row">
+
+            {% include "components/tables/title.html" %}
+
+            <table id="blocked_users_table" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Имя пользователя</th>
+                        <th>Права администратора</th>
+                        <th>Пользователь заблокирован</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>
+                                {% if user.is_superuser %}
+                                    Да
+                                {% else %}
+                                    Нет
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.is_blocked %}
+                                    Да
+                                {% else %}
+                                    Нет
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-danger" onclick="unblock_user(unblock_user({{ user.id }}))">Разблокировать</button>
+
+                                <form action="/users/detail/{{ user.id }}" style="margin-top:10px">
+                                    <button class="btn btn-outline-warning" type="submit">Информация</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+        $(document).ready(
+            function ()
+            {
+                $("#blocked_users_table").DataTable();
+            }
+        );
+    </script>
+
+    <script type="text/javascript">
+        function unblock_user(id)
+        {
+            fetch("/users/api-unblock/"+id,{
+                method:'PUT'
+            })
+                .then(response => response.json())
+                .then(document.getElementById("result").innerHTML = "Загрузка...")
+                .then(data => document.getElementById("result").innerHTML = data.message);
+        }
+    </script>
+
+{% endblock %}

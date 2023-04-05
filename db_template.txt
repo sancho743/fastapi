@@ -1,0 +1,25 @@
+select * from "user";
+select * from "password";
+select * from "group";
+select * from "user_group";
+select * from "user_password";
+select * from "group_password";
+
+drop table "user_password";
+drop table "user_group";
+drop table "group_password";
+drop table "password";
+drop table "user";
+drop table "group";
+
+
+bcrypt
+password is 'adminadmin'
+$2b$12$Gv0U8T6gUJ0CAcBJRXuEZuWYasSryxKNKHKgbiCYO/RmeZ4XIFeCq
+
+argon2
+password is 'adminadmin'
+$argon2id$v=19$m=32768,t=16,p=2$ie0k/zrMufVm4j7Tdf1NHg$HwnAcFItZ4TYl2zL+oUAXuIb2FueUIeFNGtLUBU6VQc
+
+new admin password
+/T)>+7'lL:LA

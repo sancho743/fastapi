@@ -1,0 +1,77 @@
+{% extends "shared/base.html" %}
+
+{% block title %}
+  <title>Новая группа</title>
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+      {% include "components/tables/title.html" %}
+      <div class="container">
+        {% for error in errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+        {% endfor %}
+        {% if msg %}
+        <div class="alert alert-success" role="alert">
+          {{ msg }}
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="col">
+            <h1 class="display-5">Новая группа</h1>
+          </div>
+        </div>
+
+        <form method="POST">
+          <div class="form-group">
+            <label for="name" class="form-label">Название группы</label>
+            <input type="text" required class="form-control" id="name" name="name" placeholder="название группы">
+          </div>
+          <div class="form-group" style="margin-top: 10px">
+            <label for="description" class="form-label">Описание группы</label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="описание группы">
+          </div>
+          <div class="form-group" style="margin-top: 10px">
+                <label for="users">Пользователи</label>
+                <div class="form-control" style="margin-top: 5px">
+                    {% if users %}
+                        <div class="custom_scrolling">
+                            {% for user in users %}
+                                <div class="form-check form-switch" style="margin-left: 5px">
+                                    <input class="form-check-input" type="checkbox" value="{{ user.id }}" name="users" id="users">
+                                    <label class="form-check-label" for="users">{{ user.username }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            <p>Пользователи не найдены.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form-group" style="margin-top: 10px">
+                <label for="passwords">Пароли</label>
+                <div class="form-control" style="margin-top: 5px">
+                    {% if passwords %}
+                        <div class="custom_scrolling">
+                            {% for password in passwords %}
+                            <div class="form-check form-switch" style="margin-left: 5px">
+                                <input class="form-check-input" type="checkbox" value="{{ password.id }}" name="passwords" id="passwords">
+                                <label class="form-check-label" for="passwords">{{ password.service_name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                            <p>Пароли не найдены.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary" type="submit" style="margin-top: 20px; margin-bottom: 30px;">Создать</button>
+            </div>
+        </form>
+      </div>
+{% endblock %}
